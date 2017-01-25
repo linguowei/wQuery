@@ -1,10 +1,3 @@
-/*
-* @Author: linguowei(林国威)
-* @Date:   2016-11-23 15:05:52
-* @Last Modified by:   linguowei(林国威)
-* @Last Modified time: 2016-12-05 23:34:08
-*/
-
 'use strict';
 
 // 事件绑定
@@ -95,13 +88,25 @@ WQuery.prototype.hover = function(fnOver, fnOut){
 }
 // 样式操作方法
 WQuery.prototype.css = function(attr, value){
-
 	if (arguments.length == 2) { // 参数2为设置样式
 		for (var i = 0; i < this.elements.length; i++) {
 			this.elements[i].style[attr] = value;
 		}
 	} else {
 		return getStyle(this.elements[0], attr);
+	}
+}
+// toggle方法
+WQuery.prototype.toggle = function(fun1, fun2){
+	var _arguments = arguments;
+
+	for(var i=0; i<this.elements.length; i++){
+		(function(obj){
+			var count = 0;
+			myAddEvent(obj, 'click', function(){
+				_arguments[count++%_auguments.length].call(obj);
+			})
+		})(this.elements[i])
 	}
 }
 function $ (vArg){
