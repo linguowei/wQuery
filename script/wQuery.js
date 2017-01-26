@@ -99,14 +99,43 @@ WQuery.prototype.css = function(attr, value){
 // toggle方法
 WQuery.prototype.toggle = function(fun1, fun2){
 	var _arguments = arguments;
-
-	for(var i=0; i<this.elements.length; i++){
+	for(var i=0; i<this.elements.length; i++){    
 		(function(obj){
 			var count = 0;
 			myAddEvent(obj, 'click', function(){
-				_arguments[count++%_auguments.length].call(obj);
+				_arguments[count++%_arguments.length].call(obj);
 			})
 		})(this.elements[i])
+	}
+	return this;
+}
+// attr方法
+WQuery.prototype.attr = function(attr, value){
+	if(arguments.length==2){ // 设置样式
+		for(var i=0; i<this.elements.length; i++){
+		this.elements[i][attr] = value;
+		}
+	} else {
+		return this.elements[0][attr];
+	}
+}
+// eq方法
+WQuery.prototype.eq = function(n){
+	return $(this.elements[n])
+}
+// find方法
+WQuery.prototype.find = function(str){
+	var aResult = [];
+	for(var i = 0; i<this.elements.length; i++){
+		switch(str.charAt(0)){
+			case '.':
+				var aEle = getByClass(this.elements[i], str.substring(1))
+				aResult.concat(aEle);
+				break;
+			default: 
+				var aEle = this.elements[i].getElementsByTagName(str)
+				aResult.concat(aEle);
+		}
 	}
 }
 function $ (vArg){
